@@ -9,5 +9,5 @@ export class EmailConfirmationPage {
     }
     get title() { return this.ctx.get(selectors.title); }
     get subtitle() { return this.ctx.get(selectors.subtitle); }
-    url = 'https://miro.com/email-confirm/';
+    url = 'email-confirm';
 }

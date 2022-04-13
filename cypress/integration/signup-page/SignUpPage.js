@@ -21,7 +21,7 @@ export class SignUpPage {
     get newsletterCheckbox() { return this.ctx.get(selectors.newsletterCheckbox); }
     get acceptAllCookiesButton() { return this.ctx.get(selectors.acceptAllCookiesButton); }
     
-    url = 'https://miro.com/signup';
+    url = 'signup';
 
     signUp() {
         this.registerButton.click();

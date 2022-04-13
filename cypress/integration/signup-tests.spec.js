@@ -4,10 +4,26 @@ import { EmailConfirmationPage } from './email-confirmation-page/EmailConfirmati
 
 const checkEmailText = 'Check your email';
 
-describe('Sign up form', () => {
-    beforeEach(() => {
+describe('Sign up form', () => {  
+    context('on desktop', () => {
+        before(() => {
+            Cypress.Cookies.defaults;
+        })
+        beforeEach(() => {
+            cy.viewport('macbook-13');
+        })
+        signUpSuite();
+    });
+    context('on mobile', () => {
+        beforeEach(() => {
+            cy.viewport('iphone-xr');
+        })
+        signUpSuite();
     })
+});
 
+function signUpSuite(page) {
+    
     it('asks to accept terms and conditions', () => {
         const page = new SignUpPage(cy);
         const user = new UserBuilder();
@@ -17,7 +33,6 @@ describe('Sign up form', () => {
         page.signUp();
 
         page.termsError.should('contain.text', errorText);
-        page.termsCheckbox.should('be.focused');
     });
 
     it('does not proceed with insecure password', () => {
@@ -33,7 +48,7 @@ describe('Sign up form', () => {
         page.passwordHint.should('contain.text', passwordError);
     });
 
-    // ideally, testing form validations should be in jest tests for each field,
+    // Ideally, testing form validations should be in jest tests for each field,
     // but we should test that the whole page state is invalid when a required field is invalid
     it('does not proceed with invalid email', () => {
         const page = new SignUpPage(cy);
@@ -41,6 +56,19 @@ describe('Sign up form', () => {
         const errorText = 'Enter a valid email address.';
 
         user.email = "test.com";
+        page.inputCredentials(user);
+        page.acceptTerms();
+        page.signUp();
+
+        page.emailError.should('contain.text', errorText)
+    });
+
+    it('does not register already registered email', () => {
+        const page = new SignUpPage(cy);
+        const user = new UserBuilder();
+        const errorText = 'Sorry, this email is already registered';
+
+        user.email = "kirillburton@yandex-team.ru"; // Preferably some pre-prepared account, this one is mine
         page.inputCredentials(user);
         page.acceptTerms();
         page.signUp();
@@ -99,9 +127,10 @@ describe('Sign up form', () => {
         page = new EmailConfirmationPage(cy, true);
         page.title.should('contain.text', checkEmailText);
         page.subtitle.should('contain.text', user.email);
+        // Wpuld be good to check in newsletter's DB if we subscribe user without confirmation  
     });
 
-    
+
     it('does not accept password identical to name', () => {
         const page = new SignUpPage(cy);
         const user = new UserBuilder();
@@ -131,7 +160,7 @@ describe('Sign up form', () => {
     it('can be filled and submitted with keyboard controls', () => {
         let page = new SignUpPage(cy);
         const user = new UserBuilder();
-        
+    
         page.acceptCookies();
         page.nameInput
             .type(user.name)
@@ -140,9 +169,9 @@ describe('Sign up form', () => {
             .tab()
             .type(user.password)
             .tab()
-            .check({force: true}) // checking not with {space} is technically cheating, but will do for now
+            .check({ force: true }) // Checking not with {space} is technically cheating, but will do for now
             .type('{enter}');
-        
+    
         page = new EmailConfirmationPage(cy, true);
         page.title.should('contain.text', checkEmailText);
         page.subtitle.should('contain.text', user.email);
@@ -156,24 +185,25 @@ describe('Sign up form', () => {
         const a11yInvalid = 'aria-invalid';
         const page = new SignUpPage(cy);
 
-        page.nameInput.should('have.attr', a11yInvalid, 'false'); 
-        page.emailInput.should('have.attr', a11yInvalid, 'false'); 
+        page.nameInput.should('have.attr', a11yInvalid, 'false');
+        page.emailInput.should('have.attr', a11yInvalid, 'false');
         page.passwordInput.should('have.attr', a11yInvalid, 'false');
         page.termsCheckbox.should('have.attr', a11yInvalid, 'false');
         page.nameInput.should('have.attr', a11yDescribed, 'signup-error-emptyname'); // Why is it described as error? 
         page.emailInput.should('have.attr', a11yDescribed, 'signup-error-emptyemail'); // And this one
         page.passwordInput.should('have.attr', a11yDescribed, 'signup-form-password');
         page.termsCheckbox.should('have.attr', a11yLabeled, 'signup-error-emptyTerms');
-        
+    
         page.signUp();
-        page.nameInput.should('have.attr', a11yInvalid, 'true'); 
-        page.emailInput.should('have.attr', a11yInvalid, 'true'); 
+        page.nameInput.should('have.attr', a11yInvalid, 'true');
+        page.emailInput.should('have.attr', a11yInvalid, 'true');
         page.passwordInput.should('have.attr', a11yInvalid, 'true');
         page.termsCheckbox.should('have.attr', a11yInvalid, 'true');
 
-    })
-    // next test cases are just to show I still know my test design 
-    /* would not include them on an e2e layer: 
+    });
+
+    // Next test cases are just to show I still know my test design.  
+    /* I just would not include them on an e2e layer:
     
         name = [
             [" ", invalid], 
@@ -206,4 +236,4 @@ describe('Sign up form', () => {
         ]
     
     */
-});
+}
