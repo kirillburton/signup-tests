@@ -6,9 +6,6 @@ const checkEmailText = 'Check your email';
 
 describe('Sign up form', () => {  
     context('on desktop', () => {
-        before(() => {
-            Cypress.Cookies.defaults;
-        })
         beforeEach(() => {
             cy.viewport('macbook-13');
         })
