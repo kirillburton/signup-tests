@@ -1,18 +1,28 @@
+import { SignUpPageSelectors } from "./SignUpPageSelectors.js";
+
+const selectors = new SignUpPageSelectors;
+
 export class SignUpPage {
-    constructor(ctx) {
+    constructor(ctx, isAlreadyOpen) {
         this.ctx = ctx;
-        this.ctx.visit('https://miro.com/signup');
+        if (!isAlreadyOpen) this.ctx.visit(this.url); 
     }
-    get nameInput() { return this.ctx.get(nameInput); }
-    get emailInput() { return this.ctx.get(emailInput); }
-    get passwordInput()  { return this.ctx.get(passwordInput); }
-    get registerButton() { return this.ctx.get(registerButton); }
-    get termsCheckbox() { return this.ctx.get(termsCheckbox).find('#signup-terms'); }
-    get newsletterCheckbox() { return this.ctx.get(newsletterCheckbox); }
-    get termsError() { return this.ctx.get(termsError) };
-    get passwordHint() { return this.ctx.get(passwordHint); }
-    get emailError() { return this.ctx.get(emailError); }
+    get nameInput() { return this.ctx.get(selectors.nameInput); }
+    get nameError() { return this.ctx.get(selectors.nameError); }
+    get emailInput() { return this.ctx.get(selectors.emailInput); }
+    get emailError() { return this.ctx.get(selectors.emailError); } 
+    get passwordInput() { return this.ctx.get(selectors.passwordInput); }
+    get passwordHint() { return this.ctx.get(selectors.passwordHint); }
+    get passwordValidationError() { return this.ctx.get(selectors.passwordValidationError); }
+    get passwordSubmitError() { return this.ctx.get(selectors.passwordSubmitError); }
+    get registerButton() { return this.ctx.get(selectors.registerButton); }
+    get termsCheckbox() { return this.ctx.get(selectors.termsCheckbox); }
+    get termsError() { return this.ctx.get(selectors.termsError) };
+    get newsletterCheckbox() { return this.ctx.get(selectors.newsletterCheckbox); }
+    get acceptAllCookiesButton() { return this.ctx.get(selectors.acceptAllCookiesButton); }
     
+    url = 'https://miro.com/signup';
+
     signUp() {
         this.registerButton.click();
     }
@@ -20,26 +30,14 @@ export class SignUpPage {
         this.termsCheckbox.check({force: true});
     }
     subscribeToNewsletter() {
-        this.newsletterCheckbox.check();
+        this.newsletterCheckbox.check({force: true});
     }
     inputCredentials(user) {
-        this.nameInput.type(user.name);
-        this.emailInput.type(user.email);
-        this.passwordInput.type(user.password);
+        if(user.name) this.nameInput.type(user.name);
+        if(user.email) this.emailInput.type(user.email);
+        if(user.password) this.passwordInput.type(user.password);
+    }
+    acceptCookies() {
+        this.acceptAllCookiesButton.click();
     }
 }
-
-const registerButton = buildDatatidSelector('mr-form-signup-btn-start-1');
-const nameInput = buildDatatidSelector('mr-form-signup-name-1');
-const emailInput = buildDatatidSelector('mr-form-signup-email-1');
-const passwordInput = buildDatatidSelector('mr-form-signup-password-1');
-const termsCheckbox = buildDatatidSelector('mr-form-signup-terms-1');
-const newsletterCheckbox = buildDatatidSelector('mr-form-signup-subscribe-1');
-const termsError = '#termsError';
-const passwordHint = '#password-hint';
-const emailError = '#emailError';
-
-function buildDatatidSelector(id) {
-    return `[data-testid=${id}]`;
-}
-
