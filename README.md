@@ -4,9 +4,9 @@ This is a test assignment.
 Please note that this was my first experience using Cypress – seemed like a good idea to mix business with pleasure.
 
 This suite is not fully configured for cross-browser testing because Cypress runner depends on browsers installed on user's machine.
-In a fully controlled environment this is easy to configure. Do not suppose I haven't do that because I didn't thought of that.
+In a fully controlled environment this is easy to configure. Do not suppose I haven't done that because I didn't thought of that.
 
-[![Cypress Tests](https://github.com/kirillburton/signup-tests/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/kirillburton/signup-tests/actions/workflows/main.yml)
+[![Cypress Tests](https://github.com/kirillburton/signup-tests/actions/workflows/main.yml/badge.svg)](https://github.com/kirillburton/signup-tests/actions/workflows/main.yml)
 
 **Required to run**:
 node v10.3+
