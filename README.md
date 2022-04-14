@@ -6,7 +6,7 @@ Please note that this was my first experience using Cypress – seemed like a go
 This suite is not fully configured for cross-browser testing because Cypress runner depends on browsers installed on user's machine.
 In a fully controlled environment this is easy to configure. Do not suppose I haven't done that because I didn't thought of that.
 
-[![Cypress Tests](https://github.com/kirillburton/signup-tests/actions/workflows/main.yml/badge.svg)](https://github.com/kirillburton/signup-tests/actions/workflows/main.yml)
+[![Cypress Tests](https://github.com/kirillburton/signup-tests/workflows/Cypress%20Tests/badge.svg)](https://github.com/kirillburton/signup-tests/actions)
 
 **Required to run**:
 node v10.3+
