@@ -1,4 +1,20 @@
 {
     "testFiles": "**/*.spec.js",
-    "baseUrl": "https://miro.com"
+    "baseUrl": "https://miro.com",
+    "integrationFolder": "tests",
+    "blockHosts": [
+        "cdn.cookielaw.org",
+        "track.realtimeboard.com",
+        "*.split.io",
+        "www.facebook.com",
+        "api2.branch.io",
+        "grsm.io",
+        "us-central1-adaptive-growth.cloudfunctions.net",
+        "api.hubspot.com",
+        "app.clearbit.com",
+        "*.clarity.ms",
+        "api.hubapi.com"
+    ],
+    "video": false,
+    "screenshotOnRunFailure": false
 }
