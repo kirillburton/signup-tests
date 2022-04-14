@@ -1,4 +1,3 @@
-import './commands'
 import 'cypress-plugin-tab'
 
 // cypress typically fails on unhandled exceptions

@@ -7,13 +7,24 @@ This suite is not fully configured for cross-browser testing because Cypress run
 In a controlled environment this is easy to configure. Do not suppose I haven't do that because I didn't thought of that.
 
 **Required to run**:
-node v16+
+node v10.3+
 
-**Run tests**:
+**For a local run with headless browser**:
 ```
 $ npm install
 $ npm run test
 ```
 
-Tests code is [here](https://github.com/kirillburton/signup-tests/blob/main/cypress/integration/signup-tests.spec.js)
+**For a local run with a visible browser**:
+```
+$ npm install
+$ $(npm bin)/cypress open
+```
+and run signup-tests.spec.js by clicking on it
 
+**For a cloud run:**
+use GitHub workflow "Cypress Tests"
+
+
+
+Tests code is [here](https://github.com/kirillburton/signup-tests/blob/main/tests/signup-tests.spec.js)

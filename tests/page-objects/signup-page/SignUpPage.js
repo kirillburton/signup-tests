@@ -1,6 +1,4 @@
-import { SignUpPageSelectors } from "./SignUpPageSelectors.js";
-
-const selectors = new SignUpPageSelectors;
+import { SignUpPageSelectors as selectors} from "./SignUpPageSelectors.js";
 
 export class SignUpPage {
     constructor(ctx, isAlreadyOpen) {
